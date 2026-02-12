@@ -1,75 +1,91 @@
-"""Least Common Multiple (LCM) Module - Iterative and Recursive Implementations"""
+"""Least Common Multiple (LCM) Module – iterative & recursive.
+
+The original implementation duplicated validation logic in both the
+iterative and recursive functions.  This refactor introduces a shared helper,
+``_lcm_common``, that performs type checks and delegates the calculation to
+the supplied GCD routine.  This removes duplication, makes the module easier
+to test, and keeps the public API unchanged.
+"""
 
 from functools import lru_cache
+from typing import Callable
 
 from advmath.gcd import gcd_iterative, gcd_recursive
 
 
-def lcm_iterative(a: int, b: int) -> int:
-    """
-    Calculate Least Common Multiple (LCM) iteratively using Euclidean algorithm.
+# ---------------------------------------------------------------------------
+# Shared helpers
+# ---------------------------------------------------------------------------
 
-    Args:
-        a: First integer (non-negative)
-        b: Second integer (non-negative)
+def _validate_ints(a: int, b: int) -> None:
+    """Validate that *a* and *b* are non‑negative integers.
 
-    Returns:
-        The LCM of a and b
-
-    Raises:
-        ValueError: If either a or b is negative or not an integer
-
-    Examples:
-        >>> lcm_iterative(4, 6)
-        12
-        >>> lcm_iterative(5, 7)
-        35
+    Raises
+    ------
+    TypeError
+        If either argument is not an :class:`int`.
+    ValueError
+        If either argument is negative.
     """
     if not isinstance(a, int) or not isinstance(b, int):
-        raise TypeError("LCM requires non-negative integer inputs")
-
+        raise TypeError("LCM requires integer inputs")
     if a < 0 or b < 0:
         raise ValueError("LCM is only defined for non-negative integers")
 
+
+def _lcm_common(a: int, b: int, gcd_func: Callable[[int, int], int]) -> int:
+    """Shared implementation used by :func:`lcm_iterative` and
+    :func:`lcm_recursive`.
+
+    Parameters
+    ----------
+    a, b : int
+        Non‑negative integers.
+    gcd_func : Callable[[int, int], int]
+        Function to compute the GCD of *a* and *b*.
+    """
+    _validate_ints(a, b)
     if a == 0 or b == 0:
         return 0
-
-    gcd_val = gcd_iterative(a, b)
+    gcd_val = gcd_func(a, b)
     return (a * b) // gcd_val
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+def lcm_iterative(a: int, b: int) -> int:
+    """Iteratively compute the LCM using the Euclidean algorithm.
+
+    Parameters
+    ----------
+    a, b : int
+        Non‑negative integers.
+
+    Returns
+    -------
+    int
+        The least common multiple of *a* and *b*.
+    """
+    return _lcm_common(a, b, gcd_iterative)
 
 
 @lru_cache(maxsize=None)
 def lcm_recursive(a: int, b: int) -> int:
+    """Recursively compute the LCM using the Euclidean algorithm.
+
+    Parameters
+    ----------
+    a, b : int
+        Non‑negative integers.
+
+    Returns
+    -------
+    int
+        The least common multiple of *a* and *b*.
     """
-    Calculate Least Common Multiple (LCM) recursively using Euclidean algorithm.
-
-    Args:
-        a: First integer (non-negative)
-        b: Second integer (non-negative)
-
-    Returns:
-        The LCM of a and b
-
-    Raises:
-        ValueError: If either a or b is negative or not an integer
-
-    Examples:
-        >>> lcm_recursive(4, 6)
-        12
-        >>> lcm_recursive(5, 7)
-        35
-    """
-    if not isinstance(a, int) or not isinstance(b, int):
-        raise TypeError("LCM requires non-negative integer inputs")
-
-    if a < 0 or b < 0:
-        raise ValueError("LCM is only defined for non-negative integers")
-
-    if a == 0 or b == 0:
-        return 0
-
-    gcd_val = gcd_recursive(a, b)
-    return (a * b) // gcd_val
+    return _lcm_common(a, b, gcd_recursive)
 
 
 __all__ = ["lcm_iterative", "lcm_recursive"]
