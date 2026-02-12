@@ -8,6 +8,9 @@ from advmath.factorial import factorial_iterative, factorial_recursive
 # Export fibonacci functions
 from advmath.fibonacci import fibonacci_iterative, fibonacci_recursive
 
+# Export power functions
+from advmath.power import power_iterative, power_recursive
+
 # Export gcd functions
 from advmath.gcd import gcd_iterative, gcd_recursive
 
@@ -22,6 +25,8 @@ __all__ = [
     "factorial_recursive",
     "fibonacci_iterative",
     "fibonacci_recursive",
+    "power_iterative",
+    "power_recursive",
     "gcd_iterative",
     "gcd_recursive",
     "lcm_iterative",
