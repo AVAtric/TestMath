@@ -1,0 +1,2 @@
+[console_scripts]
+factorial = factorial.cli:app
