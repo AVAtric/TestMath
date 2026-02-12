@@ -29,11 +29,14 @@ pip install -e .
 
 ```bash
 # Calculate factorial
-advmath calc 5
+advmath fact 5
 
 # Specify calculation method
-advmath calc 5 --method iterative
-advmath calc 5 --method recursive
+advmath fact 5 --method iterative
+advmath fact 5 --method recursive
+
+# Verbose output
+advmath fact 5 --verbose
 
 # Calculate GCD
 advmath gcd 48 64

@@ -3,11 +3,10 @@
 __version__ = "0.2.0"
 
 # Export factorial functions
-from advmath.iterative import factorial_iterative
-from advmath.recursive import factorial_recursive
+from advmath.factorial import factorial_iterative, factorial_recursive
 
-# Export fibonacci function
-from advmath.fibonacci import fibonacci_iterative
+# Export fibonacci functions
+from advmath.fibonacci import fibonacci_iterative, fibonacci_recursive
 
 # Export gcd functions
 from advmath.gcd import gcd_iterative, gcd_recursive
@@ -22,6 +21,7 @@ __all__ = [
     "factorial_iterative",
     "factorial_recursive",
     "fibonacci_iterative",
+    "fibonacci_recursive",
     "gcd_iterative",
     "gcd_recursive",
     "lcm_iterative",

@@ -5,17 +5,24 @@ from typing import Optional
 
 import typer
 
-from advmath.iterative import (
+from advmath.factorial import (
     factorial_iterative,
-    fibonacci_iterative,
-    gcd_iterative,
-    lcm_iterative,
-    is_prime_iterative,
-)
-from advmath.recursive import (
     factorial_recursive,
+)
+from advmath.fibonacci import (
+    fibonacci_iterative,
+    fibonacci_recursive,
+)
+from advmath.gcd import (
+    gcd_iterative,
     gcd_recursive,
+)
+from advmath.lcm import (
+    lcm_iterative,
     lcm_recursive,
+)
+from advmath.prime import (
+    is_prime_iterative,
     is_prime_recursive,
 )
 
@@ -56,18 +63,22 @@ def lcm(a: int, b: int, method: str = "iterative") -> int:
 
 
 @app.command()
-def calc(n: int, method: Optional[str] = typer.Option(None, "--method", "-m", help="Calculation method (iterative|recursive)")):
+def fact(n: int, method: Optional[str] = typer.Option(None, "--method", "-m", help="Calculation method (iterative|recursive)"), verbose: bool = typer.Option(False, "--verbose", "-v", help="Show verbose output")):
     """
     Calculate factorial of a number.
 
     Examples:
-        advmath calc 5
-        advmath calc 5 --method iterative
-        advmath calc 5 -m recursive
+        advmath fact 5
+        advmath fact 5 --method iterative
+        advmath fact 5 -m recursive
+        advmath fact 5 --verbose
     """
     try:
         result = factorial(n, method or "iterative")
-        typer.echo(f"Factorial of {n} is {result}")
+        if verbose:
+            typer.echo(f"Factorial of {n} is {result}")
+        else:
+            typer.echo(result)
         sys.exit(0)
     except ValueError as e:
         typer.echo(f"Error: {e}", err=True)
@@ -83,9 +94,9 @@ def gcd_command(a: int, b: int, method: Optional[str] = typer.Option(None, "--me
     Calculate GCD of two numbers.
 
     Examples:
-        advmath gcd 48 64
-        advmath gcd 48 64 --method iterative
-        advmath gcd 48 64 -m recursive
+        advmath gcd-command 48 64
+        advmath gcd-command 48 64 --method iterative
+        advmath gcd-command 48 64 -m recursive
     """
     try:
         result = gcd(a, b, method or "iterative")
@@ -105,9 +116,9 @@ def lcm_command(a: int, b: int, method: Optional[str] = typer.Option(None, "--me
     Calculate LCM of two numbers.
 
     Examples:
-        advmath lcm 4 6
-        advmath lcm 4 6 --method iterative
-        advmath lcm 4 6 -m recursive
+        advmath lcm-command 4 6
+        advmath lcm-command 4 6 --method iterative
+        advmath lcm-command 4 6 -m recursive
     """
     try:
         result = lcm(a, b, method or "iterative")
@@ -151,15 +162,15 @@ def info():
     typer.echo("Advanced Mathematics v0.2.0")
     typer.echo()
     typer.echo("Functions available:")
-    typer.echo("  - Factorial: factorial")
-    typer.echo("  - GCD: gcd")
-    typer.echo("  - LCM: lcm")
+    typer.echo("  - Factorial: fact")
+    typer.echo("  - GCD: gcd-command")
+    typer.echo("  - LCM: lcm-command")
     typer.echo("  - Prime check: prime")
     typer.echo()
     typer.echo("Usage examples:")
-    typer.echo("  advmath calc <n> [--method iterative|recursive]")
-    typer.echo("  advmath gcd <a> <b> [--method iterative|recursive]")
-    typer.echo("  advmath lcm <a> <b> [--method iterative|recursive]")
+    typer.echo("  advmath fact <n> [--method iterative|recursive] [--verbose]")
+    typer.echo("  advmath gcd-command <a> <b> [--method iterative|recursive]")
+    typer.echo("  advmath lcm-command <a> <b> [--method iterative|recursive]")
     typer.echo("  advmath prime <n> [--method iterative|recursive]")
 
 
