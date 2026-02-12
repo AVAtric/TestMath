@@ -1,6 +1,6 @@
 import pytest
-from factorial.iterative import factorial_iterative
-from factorial.recursive import factorial_recursive
+from advmath.iterative import factorial_iterative
+from advmath.recursive import factorial_recursive
 
 def test_iterative_factorial():
     """Test iterative factorial implementation"""

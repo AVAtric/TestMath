@@ -1,20 +1,20 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="TestMath",
-    version="0.1.0",
-    description="A factorial calculator package with iterative and recursive implementations",
+    name="advmath",
+    version="0.2.0",
+    description="Advanced Mathematics Package - Calculator with factorial, fibonacci, gcd, lcm, and prime functions",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    author="TestMath Team",
-    author_email="test@example.com",
+    author="Advmath Team",
+    author_email="advmath@example.com",
     packages=find_packages(),
     install_requires=[
         "typer>=0.12.0",
     ],
     entry_points={
         "console_scripts": [
-            "factorial=factorial.cli:app",
+            "advmath=advmath.cli:app",
         ],
     },
     python_requires=">=3.12",
@@ -24,5 +24,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.12",
+        "Topic :: Scientific/Engineering :: Mathematics",
     ],
 )

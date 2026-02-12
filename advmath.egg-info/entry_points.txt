@@ -1,0 +1,2 @@
+[console_scripts]
+advmath = advmath.cli:app
