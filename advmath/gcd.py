@@ -1,5 +1,6 @@
-"""Greatest Common Divisor (GCD) Module - Combined Iterative and Recursive Implementations"""
+"""Greatest Common Divisor (GCD) Module - Iterative and Recursive Implementations"""
 
+from functools import lru_cache
 from typing import Union
 
 
@@ -34,26 +35,16 @@ def gcd_iterative(a: int, b: int) -> int:
     if a == 0 and b == 0:
         return 0
 
-    # Lookup table for common GCD pairs (0-25)
-    _gcd_lookup = [
-        (0, 0, 0), (0, 1, 1), (0, 2, 2), (0, 3, 3), (0, 4, 4), (0, 5, 5),
-        (1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1),
-        (2, 2, 2), (2, 3, 1), (2, 4, 2), (2, 5, 1),
-        (3, 3, 3), (3, 4, 1), (3, 5, 1),
-        (4, 4, 4), (4, 5, 1),
-        (5, 5, 5)
-    ]
-
-    for pair in _gcd_lookup:
-        if (a, b) == pair[:2] or (b, a) == pair[:2]:
-            return pair[2]
-
-    return _gcd_iterative(a, b)
+    a, b = abs(a), abs(b)
+    while b:
+        a, b = b, a % b
+    return a
 
 
+@lru_cache(maxsize=None)
 def gcd_recursive(a: int, b: int) -> int:
     """
-    Calculate Greatest Common Divisor (GCD) recursively using Euclidean algorithm.
+    Calculate Greatest Common Divisor (GCD) recursively with memoization.
 
     Args:
         a: First integer (non-negative)
@@ -82,35 +73,10 @@ def gcd_recursive(a: int, b: int) -> int:
     if a == 0 and b == 0:
         return 0
 
-    # Lookup table for common GCD pairs (0-25)
-    _gcd_lookup = [
-        (0, 0, 0), (0, 1, 1), (0, 2, 2), (0, 3, 3), (0, 4, 4), (0, 5, 5),
-        (1, 1, 1), (1, 2, 1), (1, 3, 1), (1, 4, 1), (1, 5, 1),
-        (2, 2, 2), (2, 3, 1), (2, 4, 2), (2, 5, 1),
-        (3, 3, 3), (3, 4, 1), (3, 5, 1),
-        (4, 4, 4), (4, 5, 1),
-        (5, 5, 5)
-    ]
-
-    for pair in _gcd_lookup:
-        if (a, b) == pair[:2] or (b, a) == pair[:2]:
-            return pair[2]
-
-    return _gcd_recursive(a, b)
-
-
-def _gcd_iterative(a: int, b: int) -> int:
-    """Helper function for iterative GCD calculation."""
-    while b:
-        a, b = b, a % b
-    return abs(a)
-
-
-def _gcd_recursive(a: int, b: int) -> int:
-    """Helper function for recursive GCD calculation."""
+    a, b = abs(a), abs(b)
     if b == 0:
-        return abs(a)
-    return _gcd_recursive(b, a % b)
+        return a
+    return gcd_recursive(b, a % b)
 
 
 __all__ = ["gcd_iterative", "gcd_recursive"]

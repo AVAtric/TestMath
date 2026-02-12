@@ -1,6 +1,8 @@
-"""Least Common Multiple (LCM) Module - Combined Iterative and Recursive Implementations"""
+"""Least Common Multiple (LCM) Module - Iterative and Recursive Implementations"""
 
-from typing import Union
+from functools import lru_cache
+
+from advmath.gcd import gcd_iterative, gcd_recursive
 
 
 def lcm_iterative(a: int, b: int) -> int:
@@ -32,10 +34,11 @@ def lcm_iterative(a: int, b: int) -> int:
     if a == 0 or b == 0:
         return 0
 
-    gcd_val = _gcd_iterative(a, b)
+    gcd_val = gcd_iterative(a, b)
     return (a * b) // gcd_val
 
 
+@lru_cache(maxsize=None)
 def lcm_recursive(a: int, b: int) -> int:
     """
     Calculate Least Common Multiple (LCM) recursively using Euclidean algorithm.
@@ -65,22 +68,8 @@ def lcm_recursive(a: int, b: int) -> int:
     if a == 0 or b == 0:
         return 0
 
-    gcd_val = _gcd_recursive(a, b)
+    gcd_val = gcd_recursive(a, b)
     return (a * b) // gcd_val
-
-
-def _gcd_iterative(a: int, b: int) -> int:
-    """Helper function for iterative GCD calculation."""
-    while b:
-        a, b = b, a % b
-    return abs(a)
-
-
-def _gcd_recursive(a: int, b: int) -> int:
-    """Helper function for recursive GCD calculation."""
-    if b == 0:
-        return abs(a)
-    return _gcd_recursive(b, a % b)
 
 
 __all__ = ["lcm_iterative", "lcm_recursive"]

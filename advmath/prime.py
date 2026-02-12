@@ -1,5 +1,6 @@
-"""Prime Number Checker Module - Combined Iterative and Recursive Implementations"""
+"""Prime Number Checker Module - Iterative and Recursive Implementations"""
 
+from functools import lru_cache
 from typing import Union
 
 
@@ -40,7 +41,6 @@ def is_prime_iterative(n: int) -> bool:
     if n % 2 == 0:
         return False
 
-    # Check odd divisors up to sqrt(n)
     limit = int(n ** 0.5) + 1
     for divisor in range(3, limit, 2):
         if n % divisor == 0:
@@ -49,9 +49,10 @@ def is_prime_iterative(n: int) -> bool:
     return True
 
 
+@lru_cache(maxsize=None)
 def is_prime_recursive(n: int, divisor: Union[int, None] = None) -> bool:
     """
-    Check if a number is prime using a recursive algorithm.
+    Check if a number is prime using a recursive algorithm with memoization.
 
     Args:
         n: Integer to check for primality

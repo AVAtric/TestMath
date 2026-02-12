@@ -1,21 +1,21 @@
-"""Factorial Module - Combined Iterative and Recursive Implementations"""
+"""Factorial Module - Iterative and Recursive Implementations"""
 
+from functools import lru_cache
 from typing import Union
 
 
 def factorial_iterative(n: int) -> int:
     """
-    Calculate factorial iteratively with lookup table optimization.
+    Calculate factorial iteratively using multiplication.
 
     Args:
-        n: The number to calculate factorial for (0-10)
+        n: The number to calculate factorial for (non-negative)
 
     Returns:
         The factorial of n
 
     Raises:
         ValueError: If n is negative or not an integer
-        ValueError: If n exceeds the lookup table size
 
     Examples:
         >>> factorial_iterative(0)
@@ -31,28 +31,25 @@ def factorial_iterative(n: int) -> int:
     if n < 0:
         raise ValueError("Factorial is not defined for negative numbers")
 
-    # Lookup table for factorial (0! to 10!)
-    _factorial_lookup = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800]
-
-    if n >= len(_factorial_lookup):
-        raise ValueError("Factorial only defined up to 10")
-
-    return _factorial_lookup[n]
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
 
 
+@lru_cache(maxsize=None)
 def factorial_recursive(n: int) -> int:
     """
-    Calculate factorial recursively with lookup table optimization.
+    Calculate factorial recursively with memoization.
 
     Args:
-        n: The number to calculate factorial for (0-10)
+        n: The number to calculate factorial for (non-negative)
 
     Returns:
         The factorial of n
 
     Raises:
         ValueError: If n is negative or not an integer
-        ValueError: If n exceeds the lookup table size
 
     Examples:
         >>> factorial_recursive(0)
@@ -68,13 +65,9 @@ def factorial_recursive(n: int) -> int:
     if n < 0:
         raise ValueError("Factorial is not defined for negative numbers")
 
-    # Lookup table for factorial (0! to 10!)
-    _factorial_lookup = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800, 39916800]
-
-    if n >= len(_factorial_lookup):
-        raise ValueError("Factorial only defined up to 10")
-
-    return _factorial_lookup[n]
+    if n < 2:
+        return 1
+    return n * factorial_recursive(n - 1)
 
 
 __all__ = ["factorial_iterative", "factorial_recursive"]
