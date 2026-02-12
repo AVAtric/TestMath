@@ -7,6 +7,7 @@ advmath/factorial.py
 advmath/fibonacci.py
 advmath/gcd.py
 advmath/lcm.py
+advmath/power.py
 advmath/prime.py
 advmath.egg-info/PKG-INFO
 advmath.egg-info/SOURCES.txt
@@ -18,4 +19,5 @@ tests/test_factorial.py
 tests/test_fibonacci.py
 tests/test_gcd.py
 tests/test_lcm.py
+tests/test_power.py
 tests/test_prime.py
