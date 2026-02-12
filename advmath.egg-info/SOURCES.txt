@@ -3,12 +3,11 @@ setup.py
 advmath/__init__.py
 advmath/__main__.py
 advmath/cli.py
+advmath/factorial.py
 advmath/fibonacci.py
 advmath/gcd.py
-advmath/iterative.py
 advmath/lcm.py
 advmath/prime.py
-advmath/recursive.py
 advmath.egg-info/PKG-INFO
 advmath.egg-info/SOURCES.txt
 advmath.egg-info/dependency_links.txt
